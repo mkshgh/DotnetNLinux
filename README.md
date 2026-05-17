@@ -1,5 +1,5 @@
 
-# DotNet On Linux
+# Hosting your .Net Applicaitons
 
 ## 1. Prerequisities
 https://learn.microsoft.com/en-us/dotnet/core/install/linux-debian?tabs=dotnet10#debian-12
@@ -66,6 +66,45 @@ Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 [Install]
 WantedBy=multi-user.target
 ```
+
+**Using Custom Env**
+```sh
+[Unit]
+Description=MeroDotNet API
+After=network.target
+
+[Service]
+Type=simple
+
+WorkingDirectory=/var/merodotnet/publish
+
+ExecStart=/usr/bin/dotnet /var/merodotnet/publish/AspNetCoreDemo.dll
+
+Restart=always
+RestartSec=5
+
+User=www-data
+Group=www-data
+
+KillSignal=SIGINT
+SyslogIdentifier=merodotnet-api
+
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+# Custom app variables
+Environment=DB_HOST=localhost
+Environment=DB_PORT=5432
+Environment=JWT_SECRET=supersecret
+
+# Load external env file
+EnvironmentFile=/etc/merodotnet/merodotnet.env
+
+# Optional custom config path
+Environment=CONFIG_PATH=/etc/merodotnet/production.json
+
+[Install]
+WantedBy=multi-user.target```
 
 ## 4. Hosting your applications
 ## 4.1 HTTP Hosting
