@@ -104,7 +104,8 @@ EnvironmentFile=/etc/merodotnet/merodotnet.env
 Environment=CONFIG_PATH=/etc/merodotnet/production.json
 
 [Install]
-WantedBy=multi-user.target```
+WantedBy=multi-user.target
+```
 
 ## 4. Hosting your applications
 ## 4.1 HTTP Hosting
